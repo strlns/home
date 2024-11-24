@@ -1,0 +1,59 @@
+/*specificity to override geist-ui*/
+:root .headerBar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  position: relative;
+  @media (min-width: 800px) {
+    padding-top: 2rem;
+  }
+  &::after {
+    content: "";
+    background-color: rgba(120 120 120 / 0.5);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0.5px;
+  }
+}
+
+.pageTitle {
+  order: -1;
+  margin-right: 0;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  @media (min-width: 480px) {
+    order: initial;
+  }
+  @media (min-width: 800px) {
+    text-align: right;
+  }
+}
+
+.titleContainer {
+  order: -2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  @media (max-width: 799px) {
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 1280px) {
+    order: initial;
+  }
+  & .pageTitle {
+    white-space: nowrap;
+    @media (max-width: 479px) {
+      flex-grow: 1;
+    }
+  }
+}
+:root .titleContainer {
+  flex-grow: 1;
+}
+
+:global(:root:not(.js)) {
+  & .headerThemeSwitch {
+    display: none;
+  }
+}

@@ -1,0 +1,86 @@
+/*
+geist-ui's Tab component is meant to be used with content in children.
+The wrapper for the children slot is always rendered and cannot be disabled,
+so hide it using CSS (Tabs are used like navbar here, page content is not child
+of tabs)
+*/
+.tabsActiveEmpty > :global(.content) {
+  display: none;
+}
+
+:root .navLinks {
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  @media (max-width: 480px) {
+    --gap: 1;
+  }
+  @media (min-width: 1280px) {
+    flex-basis: auto;
+  }
+  /*
+  Specificity needed because of conflict with UnstyledList,
+  which sets margin:0;
+  */
+  &,
+  &:is(ul) {
+    margin-left: -1ex;
+  }
+  & li {
+    margin-bottom: 0;
+  }
+}
+
+/*Have to increase specificity here to reliably override
+geist-ui styles, which are set inline.*/
+:global(:root) a.navLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5ex 1ex;
+  @media (min-width: 480px) {
+    padding: 0.75ex 1.25ex;
+  }
+  position: relative;
+  border-radius: var(--gap-value);
+  &.active {
+    /*
+    Another one of those pesky standardized properties that need a -webkit prefix, despite being supported even by Firefox 49+
+    See 
+    https://compat.spec.whatwg.org/#the-webkit-text-stroke-width
+    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
+    and, lbnl: https://stackoverflow.com/questions/5687035/css-bolding-some-text-without-changing-its-containers-size :)
+    */
+    -webkit-text-stroke-width: 0.1ex;
+    color: var(--color-primary);
+    /* outline: 1px solid var(--color-primary); */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--gap-value);
+      border: 1px solid var(--color-primary);
+    }
+    &.home {
+      &::before {
+        display: none;
+      }
+      background-color: rgb(200 200 200 / 0.25);
+    }
+  }
+  &:active,
+  &:hover {
+    background-color: rgb(200 200 200 / 0.25);
+  }
+}
+:global(:root.dark) a.navLink {
+  &:active,
+  &:hover {
+    background: linear-gradient(
+      35deg,
+      rgb(255 255 255 / 0.125) 0%,
+      rgb(255 255 255 / 0.25) 100%
+    );
+  }
+  &::before {
+    opacity: 0.5;
+  }
+}

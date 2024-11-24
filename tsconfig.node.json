@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["./src/*"],
+      "@/*": ["./src/*", "./node_modules/*"]
+    }
+  },
+  "include": ["vite.config.ts"],
+  "ts-node": {
+    "esm": true,
+    "require": ["tsconfig-paths/register"]
+  }
+}

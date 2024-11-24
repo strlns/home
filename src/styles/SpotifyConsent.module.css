@@ -1,0 +1,64 @@
+.overlay {
+  background: linear-gradient(
+    132deg,
+    rgb(255 255 255 / 0.55) 0%,
+    rgba(255 255 255 / 0.9) 100%
+  );
+  backdrop-filter: blur(2px);
+  position: relative;
+  text-align: center;
+  padding: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(30 215 96);
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.75s ease-out;
+  }
+  &:hover {
+    &::before {
+      opacity: 0.25;
+    }
+  }
+  .dark & {
+    background: linear-gradient(
+      170deg,
+      rgb(0 0 0 / 0.75) 0%,
+      rgb(0 0 0 / 0.85) 100%
+    );
+    &:hover::before {
+      opacity: 0.125;
+    }
+  }
+}
+.consentText {
+  max-width: min(100%, 48ch);
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  margin: auto;
+  z-index: 9;
+  transition: box-shadow 0.5s ease;
+  &:hover {
+    box-shadow: 0px 0.5rem 2rem rgba(0 0 0 / 0.275) !important;
+  }
+  &.dark:hover {
+    box-shadow: 0px 0 2rem rgba(180 255 180 / 0.275) !important;
+  }
+}
+
+:root .dl {
+  & dd {
+    line-height: inherit;
+  }
+}
+
+.icon {
+  margin: auto;
+  min-height: 24px !important;
+  width: auto !important;
+}

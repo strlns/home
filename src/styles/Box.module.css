@@ -1,0 +1,17 @@
+.box {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  composes: gap from global;
+  --gap: 4;
+  & > * {
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+  &.h {
+    flex-direction: row;
+  }
+  &.inline {
+    display: inline-flex;
+  }
+}
