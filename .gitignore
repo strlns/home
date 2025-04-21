@@ -1,0 +1,4 @@
+/deploy-key
+dist/
+node_modules
+.env

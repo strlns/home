@@ -1,0 +1,3 @@
+:root .smallTitle :global(.title *) {
+  font-size: 1em !important;
+}

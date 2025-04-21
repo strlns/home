@@ -1,0 +1,61 @@
+:root {
+  :global(&:not(.js)) {
+    :global(.snippet).truncated {
+      height: 5em;
+      &::after {
+        display: none;
+      }
+    }
+  }
+  & :global(.snippet).truncated {
+    --icon-size: calc(var(--snippet-font-size) * 1.69);
+    --field-height: calc(
+      1em + 1.5 * var(--snippet-padding-top) + var(--snippet-font-size)
+    );
+    overflow: hidden;
+    & :global(.copy) {
+      z-index: 9;
+    }
+    height: calc(3 * (var(--field-height)));
+    &::after {
+      content: "";
+      position: absolute;
+      height: 3em;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.75) 50%,
+        rgb(255, 255, 255) 100%
+      );
+    }
+    &.dark::after {
+      background: linear-gradient(
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.75) 50%,
+        rgb(0, 0, 0) 100%
+      );
+    }
+  }
+  & .wrap .chevron {
+    position: absolute;
+    right: calc(0.5 * var(--unit));
+    bottom: calc(0.5 * var(--unit));
+    width: var(--icon-size);
+    height: var(--icon-size);
+    z-index: 9;
+    border-color: transparent;
+    overflow: visible;
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      left: -2rem;
+      top: -1.5rem;
+    }
+  }
+}
+
+.wrap {
+  position: relative;
+}

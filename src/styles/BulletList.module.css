@@ -1,0 +1,32 @@
+.bullets {
+  display: block;
+  list-style-type: none;
+  padding-left: 1em;
+  margin: 0.5em 0.75em 0;
+}
+
+.bullet {
+  display: block;
+  position: relative;
+  line-height: 1.25;
+}
+
+.bullet:not(:last-child) {
+  margin-bottom: 0.75em;
+}
+
+/*Specificity to override geist-ui*/
+.bullets .bullet::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  left: -0.25em;
+  background: var(--color-primary);
+  height: 0.25em;
+  width: 0.25em;
+  border-radius: 99rem;
+}
+
+.noBullet::before {
+  display: none;
+}

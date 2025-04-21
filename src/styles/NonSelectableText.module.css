@@ -1,0 +1,5 @@
+.selectNone {
+  /*This needs a prefix in iOS safari, automatically added by PostCSS.*/
+  user-select: none;
+  cursor: default;
+}

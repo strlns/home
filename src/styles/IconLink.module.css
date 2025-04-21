@@ -1,0 +1,48 @@
+.iconLink {
+  --gap: 1;
+  composes: gap from global;
+  --icon-size: 1.75em;
+
+  &.leftAuto {
+    --icon-size: 1em;
+  }
+  /*for icon added by geist-ui*/
+  & > :last-child:is(svg) {
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+  }
+}
+/*selectors prefixed with :root to override geist-ui styles.*/
+:root .iconLink {
+  display: inline-flex;
+  align-items: center;
+  &.block {
+    display: flex;
+    width: 100%;
+  }
+  &.centered {
+    justify-content: center;
+    text-align: center;
+  }
+}
+.iconLeft {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-right: 1ex;
+  composes: icon from "./Icon.module.css";
+  /*When using geist-ui icons, override their margins*/
+  & svg {
+    margin: 0 !important;
+  }
+}
+.text {
+  flex-shrink: 0;
+  /*When using geist-ui Text component inside this, override its margin-right.
+  I fully rely on gap here (sorry, old safari versions)*/
+  &,
+  & > * {
+    margin-right: 0 !important;
+  }
+  max-width: calc(100% - 2 * var(--icon-size));
+}
