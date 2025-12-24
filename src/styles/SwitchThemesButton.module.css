@@ -1,0 +1,37 @@
+.systemThemeIcon {
+  position: absolute;
+  bottom: -0.25rem;
+  /*left: calc(50% - var(--icon-size) / 2);
+  top: calc(50% - var(--icon-size) / 2);*/
+  opacity: 0.375;
+  --icon-size: 1.25rem;
+  /*!important to override geist-ui, other approaches fail here*/
+  &:is(svg) {
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+  }
+
+  right: 5%;
+  top: 0;
+  &:not(.active):first-child {
+    top: auto;
+    right: auto;
+    bottom: 0.1rem;
+    left: 0.1rem;
+  }
+  &.active {
+    &:first-child {
+      --icon-size: 1.375rem;
+      transform: translate(-0.125rem, 0.125rem);
+    }
+    &:last-child {
+      transform: translate(0.25rem, -0.25rem);
+    }
+    left: calc(50% - var(--icon-size) / 2);
+    top: calc(50% - var(--icon-size) / 2);
+    transform: none;
+    right: auto;
+    bottom: auto;
+    opacity: 1;
+  }
+}

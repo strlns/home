@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "email": "kontakt@moritzrehbach.de",
+  "image": "https://moritzrehbach.de/moritz.jpg",
+  "jobTitle": "Web developer",
+  "name": "Moritz Rehbach",
+  "telephone": "+49 1575 725 28 60",
+  "url": "https://www.moritzrehbach.de"
+}

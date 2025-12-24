@@ -1,0 +1,94 @@
+:root {
+  --unit: 1rem;
+  --gap-unit: 0.25rem;
+  --gap: 2;
+  --gap-value: calc(var(--gap-unit) * var(--gap));
+  --icon-size: calc(1.75 * var(--unit));
+  --bg-size-b: 150vh;
+  --radius: 6px;
+  @media (min-width: 800px) {
+    --bg-size-b: min(150vh, calc(50% - var(--bg-size-t, 12rem)));
+  }
+  --bg-size-t: 10rem;
+  @media (min-width: 800px) {
+    --bg-size-t: min(20rem, 50vh);
+  }
+  & h2 {
+    line-height: 1.125;
+  }
+  & section main {
+    padding-top: 1rem;
+  }
+
+  &:not(.js) {
+    .collapse {
+      & .container,
+      & .content {
+        height: auto !important;
+        visibility: visible !important;
+      }
+    }
+    & .snippet {
+      overflow: auto;
+    }
+    & .snippet .copy {
+      display: none;
+    }
+  }
+}
+
+picture {
+  display: contents;
+}
+
+img {
+  /*Despite technically being the default, this makes a difference in some scenarios. 
+  Example: aspect-ratio + explicit width in CSS + width and height attributes, but no height in CSS
+  causes the aspect-ratio to be ignored. Reason: img tags are special "replaced elements". */
+  height: auto;
+}
+
+.gap {
+  gap: calc(var(--gap) * var(--gap-unit));
+}
+
+.desktop {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+#page-view marquee:has(.noticable) {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
+This caused more problems than it solved.
+First restricted to a class, then replaced 
+by explicit tooltips.
+
+@media (pointer: coarse) {
+  .a11y[title] {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    overflow: visible;
+  }
+  .a11y[title]:focus::after,
+  .a11y[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: 90%;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid;
+    border-radius: 0.125em;
+    filter: drop-shadow(#797979 0.5rem);
+    width: fit-content;
+    padding: 3px;
+  }
+}
+*/

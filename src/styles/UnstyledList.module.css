@@ -1,0 +1,11 @@
+.unstyledList {
+  list-style-type: none;
+  paddding-left: 0;
+  margin: 0;
+  & li::before {
+    display: none;
+  }
+  & li:last-child {
+    margin-bottom: 0;
+  }
+}

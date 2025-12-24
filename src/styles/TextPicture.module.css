@@ -1,0 +1,97 @@
+:root .wrap {
+  & :global(p) {
+    margin: 0;
+  }
+  margin-top: 0;
+  margin-bottom: calc(2 * var(--unit));
+}
+
+.wrap {
+  --gap: 5;
+  composes: gap from global;
+  & figure {
+    margin: 0;
+  }
+  & figcaption {
+    font-size: 0.875em;
+    font-weight: 500;
+    font-style: italic;
+  }
+  & .image,
+  & figure.image {
+    margin-top: 0.75ex;
+  }
+}
+
+.figure {
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.image {
+  position: relative;
+  z-index: 2;
+  &.mobileFull {
+    @media (max-width: 479px) {
+      width: 100%;
+      margin-bottom: calc(0.25 * var(--unit));
+    }
+  }
+  &.square {
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  &.rounded {
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+}
+
+.float {
+  clear: both;
+  overflow: hidden;
+  & .image {
+    width: 38.19%;
+  }
+  & .image.left {
+    float: left;
+    margin-right: var(--unit);
+  }
+  & .image.right {
+    float: right;
+    margin-left: var(--unit);
+  }
+  & .divider {
+    margin-top: var(--gap-value) !important;
+  }
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 144fr) minmax(0, 89fr);
+  & * {
+    /*multiple elements, don't use grid-auto-flow.*/
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  & .image,
+  & figcaption {
+    grid-column: 2/3;
+    width: 100%;
+  }
+  & .divider {
+    grid-row: 2/3;
+    grid-column: 1/3;
+    margin-top: 0;
+  }
+  &.left {
+    grid-template-columns: 89fr 144fr;
+    & *:not(.divider) {
+      grid-column: 2/3;
+    }
+    & .image {
+      grid-column: 1/2;
+    }
+  }
+}

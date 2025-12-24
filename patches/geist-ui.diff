@@ -1,0 +1,102 @@
+diff --git a/components/tabs/tabs-item.tsx b/components/tabs/tabs-item.tsx
+index a2c5cd600..bb38574db 100644
+--- a/components/tabs/tabs-item.tsx
++++ b/components/tabs/tabs-item.tsx
+@@ -10,10 +10,6 @@ interface Props {
+   disabled?: boolean
+ }
+ 
+-const defaultProps = {
+-  disabled: false,
+-}
+-
+ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>
+ export type TabsItemProps = Props & NativeAttrs
+ 
+@@ -21,8 +17,8 @@ const TabsItemComponent: React.FC<React.PropsWithChildren<TabsItemProps>> = ({
+   children,
+   value,
+   label,
+-  disabled,
+-}: React.PropsWithChildren<TabsItemProps> & typeof defaultProps) => {
++  disabled = false,
++}: React.PropsWithChildren<TabsItemProps>) => {
+   const { SCALES } = useScale()
+   const { register, currentValue } = useTabsContext()
+   const isActive = useMemo(() => currentValue === value, [currentValue, value])
+@@ -147,7 +143,6 @@ const TabsItemComponent: React.FC<React.PropsWithChildren<TabsItemProps>> = ({
+   return isActive ? <>{children}</> : null
+ }
+ 
+-TabsItemComponent.defaultProps = defaultProps
+ TabsItemComponent.displayName = 'GeistTabsItem'
+ const TabsItem = withScale(TabsItemComponent)
+ export default TabsItem
+diff --git a/components/tabs/tabs.tsx b/components/tabs/tabs.tsx
+index 8fe44f12c..a614a48fa 100644
+--- a/components/tabs/tabs.tsx
++++ b/components/tabs/tabs.tsx
+@@ -27,41 +27,29 @@ interface Props {
+   hoverWidthRatio?: number
+   align?: CSSProperties['justifyContent']
+   activeClassName?: string
+-  activeStyles?: CSSProperties
+-}
+-
+-const defaultProps = {
+-  className: '',
+-  hideDivider: false,
+-  highlight: true,
+-  leftSpace: '12px' as CSSProperties['marginLeft'],
+-  hoverHeightRatio: 0.7,
+-  hoverWidthRatio: 1.15,
+-  activeClassName: '',
+-  activeStyle: {},
+-  align: 'left',
++  activeStyle?: CSSProperties
+ }
+ 
+ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>
+ export type TabsProps = Props & NativeAttrs
+ 
+ const TabsComponent: React.FC<React.PropsWithChildren<TabsProps>> = ({
+-  initialValue: userCustomInitialValue,
+-  value,
+-  hideDivider,
+-  hideBorder,
++  initialValue: userCustomInitialValue = '',
++  value = '',
++  hideDivider = false,
++  hideBorder = false,
+   children,
+   onChange,
+-  className,
+-  leftSpace,
+-  highlight,
+-  hoverHeightRatio,
+-  hoverWidthRatio,
+-  activeClassName,
+-  activeStyle,
+-  align,
++  className = '',
++  leftSpace = '12px' as CSSProperties['marginLeft'],
++  highlight = true,
++  hoverHeightRatio = 0.7,
++  hoverWidthRatio = 1.15,
++  activeClassName = '',
++  activeStyle = {},
++  align = 'left',
+   ...props
+-}: React.PropsWithChildren<TabsProps> & typeof defaultProps) => {
++}: React.PropsWithChildren<TabsProps>) => {
+   const theme = useTheme()
+   const { SCALES } = useScale()
+   const [tabs, setTabs] = useState<Array<TabsHeaderItem>>([])
+@@ -179,7 +167,6 @@ const TabsComponent: React.FC<React.PropsWithChildren<TabsProps>> = ({
+   )
+ }
+ 
+-TabsComponent.defaultProps = defaultProps
+ TabsComponent.displayName = 'GeistTabs'
+ const Tabs = withScale(TabsComponent)
+ export default Tabs

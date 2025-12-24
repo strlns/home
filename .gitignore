@@ -1,0 +1,8 @@
+/deploy-key
+dist/
+node_modules
+.env
+/forks/@geist-ui/core/*
+!/forks/@geist-ui/core/esm
+!/forks/@geist-ui/core/dist
+!/forks/@geist-ui/core/package.json

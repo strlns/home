@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Introducing VimZilla</title>
+
+    <!-- Inlined CSS (Replaces Tailwind CDN for single-file delivery) -->
+    <style>
+      /*
+        Tailwind CSS License Compliance:
+        The CSS below is a minimal, compiled subset of utility classes derived from the MIT-licensed Tailwind CSS framework.
+        It is included inline for single-file delivery.
+        */
+
+      :root {
+        --color-gray-900: #111827;
+        --color-gray-800: #1f2937;
+        --color-gray-700-50: rgba(55, 65, 81, 0.5);
+        --color-gray-500: #6b7280;
+        --color-gray-400: #9ca3af;
+        --color-gray-300: #d1d5db;
+        --color-red-500: #ef4444;
+        --color-red-600: #dc2626;
+        --color-red-700: #b91c1c;
+        --color-red-400: #f87171;
+        --color-cyan-400: #22d3ee;
+        --color-cyan-300: #67e8f9;
+        --color-terminal: #00ffc0;
+      }
+
+      /* Base Styles & Global Utilities (bg-gray-900 text-white min-h-screen flex items-center justify-center p-4) */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--color-gray-900);
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .terminal-code {
+        font-family: "Menlo", "Consolas", "Monospace";
+        color: var(--color-terminal);
+      }
+      .w-full {
+        width: 100%;
+      }
+      .max-w-5xl {
+        max-width: 64rem;
+      }
+      .text-center {
+        text-align: center;
+      }
+
+      /* Spacing & Layout */
+      .mb-2 {
+        margin-bottom: 0.5rem;
+      }
+      .mb-4 {
+        margin-bottom: 1rem;
+      }
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+      .mb-8 {
+        margin-bottom: 2rem;
+      }
+      .mb-16 {
+        margin-bottom: 4rem;
+      }
+      .mt-4 {
+        margin-top: 1rem;
+      }
+      .p-8 {
+        padding: 2rem;
+      }
+      .p-4 {
+        padding: 1rem;
+      }
+      .px-12 {
+        padding-left: 3rem;
+        padding-right: 3rem;
+      }
+      .py-4 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      .space-y-4 > * + * {
+        margin-top: 1rem;
+      }
+      .flex {
+        display: flex;
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      .flex-1 {
+        flex: 1 1 0%;
+      }
+      .gap-6 {
+        gap: 1.5rem;
+      }
+      .grid {
+        display: grid;
+      }
+      .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+      .inline-block {
+        display: inline-block;
+      }
+
+      /* Typography & Color */
+      .text-6xl {
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+      .text-xl {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+      .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+      .text-4xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+      .text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+      .text-lg {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+      }
+      .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+      .font-extrabold {
+        font-weight: 800;
+      }
+      .font-bold {
+        font-weight: 700;
+      }
+      .font-semibold {
+        font-weight: 600;
+      }
+      .font-light {
+        font-weight: 300;
+      }
+      .tracking-tight {
+        letter-spacing: -0.025em;
+      }
+      .text-white {
+        color: white;
+      }
+      .text-gray-300 {
+        color: var(--color-gray-300);
+      }
+      .text-gray-400 {
+        color: var(--color-gray-400);
+      }
+      .text-gray-500 {
+        color: var(--color-gray-500);
+      }
+      .text-red-400 {
+        color: var(--color-red-400);
+      }
+      .text-cyan-400 {
+        color: var(--color-cyan-400);
+      }
+      .text-cyan-300 {
+        color: var(--color-cyan-300);
+      }
+      .text-transparent {
+        color: transparent;
+      }
+      .bg-clip-text {
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .bg-gradient-to-r {
+        background-image: linear-gradient(
+          to right,
+          var(--color-red-500),
+          var(--color-cyan-400)
+        );
+      }
+
+      /* Backgrounds and Borders */
+      .bg-gray-800 {
+        background-color: var(--color-gray-800);
+      }
+      .bg-gray-900 {
+        background-color: var(--color-gray-900);
+      }
+      .bg-gray-700\/50 {
+        background-color: var(--color-gray-700-50);
+      }
+      .rounded-xl {
+        border-radius: 0.75rem;
+      }
+      .rounded-lg {
+        border-radius: 0.5rem;
+      }
+      .rounded-full {
+        border-radius: 9999px;
+      }
+      .border-b-4 {
+        border-bottom-width: 4px;
+      }
+      .border {
+        border-width: 1px;
+      }
+      .border-red-500 {
+        border-color: var(--color-red-500);
+      }
+      .border-cyan-400 {
+        border-color: var(--color-cyan-400);
+      }
+      .border-red-500\/50 {
+        border-color: rgba(239, 68, 68, 0.5);
+      }
+
+      /* Effects */
+      .shadow-2xl {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      .transition {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+      }
+      .duration-300 {
+        transition-duration: 300ms;
+      }
+      .transform {
+        transform: translate(0, 0) rotate(0) skewX(0) skewY(0) scaleX(1)
+          scaleY(1);
+      }
+
+      /* Button specific styles */
+      .bg-red-600 {
+        background-color: var(--color-red-600);
+      }
+      .bg-red-600:hover {
+        background-color: var(--color-red-700);
+      }
+      .hover\:scale-105:hover {
+        transform: scale(1.05);
+      }
+
+      /* Responsive (md breakpoint >= 768px) */
+      @media (min-width: 768px) {
+        .md\:text-8xl {
+          font-size: 6rem;
+          line-height: 1;
+        }
+        .md\:text-3xl {
+          font-size: 1.875rem;
+          line-height: 2.25rem;
+        }
+        .md\:text-4xl {
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+        .md\:flex-row {
+          flex-direction: row;
+        }
+        .md\:space-y-0 > * + * {
+          margin-top: 0;
+        }
+        .md\:space-x-8 > * + * {
+          margin-left: 2rem;
+        }
+        .md\:grid-cols-2 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-5xl">
+      <!-- Header -->
+      <header class="text-center mb-16">
+        <h1
+          class="text-6xl md:text-8xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-cyan-400 mb-2"
+        >
+          Introducing VIMZILLA
+        </h1>
+        <p class="text-xl md:text-3xl text-gray-400 font-light">
+          A New Text Editing Paradigm
+        </p>
+      </header>
+
+      <!-- Hero Section: The Problem -->
+      <section
+        class="mb-16 p-8 bg-gray-800 rounded-xl shadow-2xl border-b-4 border-red-500"
+      >
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          The Final 'Q' is Not Guaranteed.
+        </h2>
+        <p class="text-lg text-gray-300 mb-6">
+          You rely on a simple keystroke—<span class="terminal-code text-xl"
+            >:wq</span
+          >—to manage critical infrastructure, but is it really reliable?
+          Network latency, nested sessions, and muscle memory failures can turn
+          your exit into a non-deterministic disaster. The anxiety of losing an
+          unsaved configuration or corrupting a valuable, temporary macro is an
+          unacceptable operational risk.
+        </p>
+
+        <div
+          class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 text-center text-red-400"
+        >
+          <div
+            class="flex-1 bg-gray-900 p-4 rounded-lg border border-red-500/50"
+          >
+            <p class="text-2xl font-bold">Latency Spike</p>
+            <p class="text-sm text-gray-400">
+              Lost :wq command and buffer unsaved.
+            </p>
+          </div>
+          <div
+            class="flex-1 bg-gray-900 p-4 rounded-lg border border-red-500/50"
+          >
+            <p class="text-2xl font-bold">Session Cleansing</p>
+            <p class="text-sm text-gray-400">
+              Guaranteed loss of all valuable macros.
+            </p>
+          </div>
+          <div
+            class="flex-1 bg-gray-900 p-4 rounded-lg border border-red-500/50"
+          >
+            <p class="text-2xl font-bold">Non-Deterministic</p>
+            <p class="text-sm text-gray-400">
+              One failure can cause a \$4M outage.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Value Proposition Section: The Solution -->
+      <section
+        class="mb-16 p-8 bg-gray-800 rounded-xl shadow-2xl border-b-4 border-cyan-400"
+      >
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">
+          Introducing: Exiting Vim as a Service.
+        </h2>
+        <p class="text-lg text-gray-300 mb-8">
+          VimZilla transforms the simple act of quitting into a
+          mission-critical, highly available **Distributed
+          Macro-Exit-as-a-Service (DMEAS)**. We don't just close the file; we
+          atomically validate and persist your entire volatile session state.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-4 bg-gray-700/50 rounded-lg">
+            <p class="text-xl font-semibold text-cyan-300 mb-2">
+              99.998% Availability
+            </p>
+            <p class="text-sm text-gray-400">
+              Guaranteed exit protocol, 24/7, regardless of network conditions
+              or latency.
+            </p>
+          </div>
+          <div class="p-4 bg-gray-700/50 rounded-lg">
+            <p class="text-xl font-semibold text-cyan-300 mb-2">
+              Macro Persistence
+            </p>
+            <p class="text-sm text-gray-400">
+              Your valuable automation sequences are automatically backed up to
+              the cloud before exit.
+            </p>
+          </div>
+          <div class="p-4 bg-gray-700/50 rounded-lg">
+            <p class="text-xl font-semibold text-cyan-300 mb-2">
+              Clean Exit (Always)
+            </p>
+            <p class="text-sm text-gray-400">
+              Eliminates Phantom Locks, corruption, and buffer inconsistencies,
+              guaranteeing a system-ready state.
+            </p>
+          </div>
+          <div class="p-4 bg-gray-700/50 rounded-lg">
+            <p class="text-xl font-semibold text-cyan-300 mb-2">
+              The Ultimate Safety
+            </p>
+            <p class="text-sm text-gray-400">
+              Use <span class="terminal-code text-lg">:QVIMZILLA!</span> to quit
+              without saving, but still safely persist your macros.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="text-center">
+        <h3 class="text-2xl md:text-3xl font-light mb-6 text-gray-300">
+          Stop using shortcuts. Start outsourcing the complexity.
+        </h3>
+        <a
+          href="vimzilla-book.pdf"
+          class="inline-block px-12 py-4 text-xl font-bold rounded-full transition duration-300 bg-red-600 hover:bg-red-700 text-white shadow-lg transform hover:scale-105"
+          download
+        >
+          Read The Ebook: VIMZILLA - The Final 'Q'
+        </a>
+        <p class="mt-4 text-sm text-gray-500">
+          The 7-Layer Protocol for Macro Exit Safety and Data Integrity
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
